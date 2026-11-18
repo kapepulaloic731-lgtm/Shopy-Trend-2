@@ -1,0 +1,18 @@
+name: Décompresser le zip
+on: workflow_dispatch
+permissions:
+  contents: write
+jobs:
+  unzip:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          unzip -o shopy-trend.zip
+          cp -r shopy-trend/. .
+          rm -rf shopy-trend shopy-trend.zip
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add -A
+          git commit -m "Ajout du site Shopy Trend"
+          git push
